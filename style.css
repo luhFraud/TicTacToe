@@ -41,14 +41,45 @@ table tr:last-child td {
     border-bottom: 0px;
 }
 
-.hover {
-    box-shadow: 5px 5px 5px grey;
+.hover0 {
+    box-shadow: -3px -3px 6px grey;
 }
 
+.hover1 {
+    box-shadow: 3px -3px 6px rgba(0, 0, 0, 0.35); 
+}
+
+.hover2 {
+    box-shadow: 3px -3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.hover3 {
+    box-shadow: -3px 3px 6px rgba(0, 0, 0, 0.35);
+}
+
+.hover4 {
+    box-shadow:  0px 0px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hover5 {
+    box-shadow: 3px 0px 6px rgba(0, 0, 0, 0.35);
+}
+
+.hover6 {
+    box-shadow: rgba(0, 0, 0, 0.35) -3px 3px 6px;
+}
+
+.hover7 {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 6px;
+}
+
+.hover8 {
+    box-shadow: rgba(0, 0, 0, 0.35) 3px 3px 6px;
+}
 .box {
     border: 5px rgb(226, 226, 226) solid;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.62em;
+    height: 1.62em;
     font-size: 5rem;
     text-align: center;
     cursor: default;
