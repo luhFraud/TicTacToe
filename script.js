@@ -1,4 +1,9 @@
 const hover = document.querySelectorAll('.box');
+const results = document.querySelector('.results');
+
+let winner;
+let loser;
+
 
 const winningConditions = [
     [0,1,2],
@@ -25,29 +30,68 @@ const player = (name, symbol) => {
     const changeTurns = () => {
         if (currentTurn === player1) {
             currentTurn = player2
+            previousTurn = player1
         } else {
             currentTurn = player1
+            previousTurn = player2
         }
     }
     
     const checkWinner = () => {
+        let declareWinner = false
         winningConditions.forEach((item) => {
             if (gameBoard.board[item[0]] === currentTurn.getSymbol() && 
             gameBoard.board[item[1]] === currentTurn.getSymbol() && 
             gameBoard.board[item[2]] === currentTurn.getSymbol()) {
-                console.log('winner' , currentTurn.getSymbol())
+                
+                declareWinner = true
+                WinnerDeclared(declareWinner);
+
             }
-        })
+        });
     }
     
+    const WinnerDeclared = x => {
+        let declareDraw;
+        if(x === true) {
+            let winner = currentTurn.getName();
+            let loser = previousTurn.getName();  
 
+            const winnerH2 = document.createElement('h2');
+            winnerH2.textContent = ('Winner is ' + winner + ' !');
+            results.appendChild(winnerH2);
 
-    return {getName, getSymbol, changeTurns, checkWinner}
+            const loserP = document.createElement('p');
+            loserP.textContent = ('Loser is ' + loser + " :'(");
+            results.appendChild(loserP);
+            console.log('winner' , currentTurn.getSymbol())
+            document.getElementById('winning-container').style.display = '';
+        } else {
+            declareDraw = false
+            DrawDeclared(declareDraw);
+        }
+    }
+
+    const DrawDeclared = z => {
+
+        if(z === false) {
+            const drawH1 = document.createElement('h1');
+            drawH1.textContent = 'Draw'
+            results.appendChild(drawH1);
+            document.getElementById('winning-container').style.display = '';
+        }
+
+    }
+
+    return {getName, getSymbol, changeTurns, checkWinner, WinnerDeclared, DrawDeclared}
 };
 
 const player1 = player('Player 1', 'X');
 const player2 = player('Player 2', 'O');
 let currentTurn = player1;
+let previousTurn = player2;
+
+
 
 
 
