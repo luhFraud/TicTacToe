@@ -1,5 +1,10 @@
 const hover = document.querySelectorAll('.box');
 const results = document.querySelector('.results');
+const nextTurn = document.querySelector(".next-turn");
+const player1TurnMSG = document.querySelector(".player1-turn");
+const player2TurnMSG = document.querySelector(".player2-turn");
+
+player1TurnMSG.style.display = '';
 
 let winner;
 let loser;
@@ -22,18 +27,39 @@ const gameBoard = (() => {
     return {board};
 })();
 
+
+
+
+
 // Factory Function: Creates players
 const player = (name, symbol) => {
     const getName = () => name;
     const getSymbol = () => symbol;
 
     const changeTurns = () => {
+
+
         if (currentTurn === player1) {
             currentTurn = player2
             previousTurn = player1
+            player1TurnMSG.style.display = 'none';
+            player2TurnMSG.style.display = '';
+
         } else {
             currentTurn = player1
             previousTurn = player2
+            player1TurnMSG.style.display = '';
+            player2TurnMSG.style.display = 'none';
+        }
+    }
+
+    const turnMSG = () => {
+        if(currentTurn.getSymbol() = 'X') {
+           player1TurnMSG.style.display = '';
+           player2TurnMSG.style.display = 'none';
+        } else {
+            player1TurnMSG.style.display = 'none';
+           player2TurnMSG.style.display = '';
         }
     }
     
@@ -50,11 +76,11 @@ const player = (name, symbol) => {
                 let winner = currentTurn.getName();
                 let loser = previousTurn.getName();
                 const winnerH2 = document.createElement('h2');
-                winnerH2.textContent = ('Winner is ' + winner + ' !');
+                winnerH2.textContent = ( winner + " WINS!");
                 results.appendChild(winnerH2);
 
                 const loserP = document.createElement('p');
-                loserP.textContent = ('Loser is ' + loser + " :'(");
+                loserP.textContent = (loser + " LOST! :'(");
                 results.appendChild(loserP);
                 console.log('winner' , currentTurn.getSymbol())
                 document.getElementById('winning-container').style.display = '';
@@ -94,14 +120,21 @@ let previousTurn = player2;
 
 
 
-
-
 for (let i = 0; i < hover.length; i++ ) {
+
 
     hover[i].addEventListener('click', showSymbol, { once: true})
 
     function showSymbol() {
-        hover[i].textContent = currentTurn.getSymbol();
+
+        
+        if(currentTurn.getSymbol() === 'X') {
+            hover[i].style.color = 'rgb(101, 119, 179)'
+            hover[i].textContent = 'X'
+        } else {
+            hover[i].style.color = 'RGB(218, 44, 67)'
+            hover[i].textContent = 'O'
+        }
         storeSymbol();
         currentTurn.checkWinner();
         currentTurn.changeTurns();
