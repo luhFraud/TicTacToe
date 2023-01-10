@@ -38,52 +38,53 @@ const player = (name, symbol) => {
     }
     
     const checkWinner = () => {
-        let declareWinner = false
-        winningConditions.forEach((item) => {
-            if (gameBoard.board[item[0]] === currentTurn.getSymbol() && 
-            gameBoard.board[item[1]] === currentTurn.getSymbol() && 
-            gameBoard.board[item[2]] === currentTurn.getSymbol()) {
-                
-                declareWinner = true
-                WinnerDeclared(declareWinner);
+        let winnerDeclared;
 
-            }
-        });
+        for(i = 0 ; i < winningConditions.length ; i++) {
+            
+            if(gameBoard.board[winningConditions[i][0]] === currentTurn.getSymbol() && 
+               gameBoard.board[winningConditions[i][1]] === currentTurn.getSymbol() &&
+               gameBoard.board[winningConditions[i][2]] === currentTurn.getSymbol()) {
+                
+                winnerDeclared = true;
+                let winner = currentTurn.getName();
+                let loser = previousTurn.getName();
+                const winnerH2 = document.createElement('h2');
+                winnerH2.textContent = ('Winner is ' + winner + ' !');
+                results.appendChild(winnerH2);
+
+                const loserP = document.createElement('p');
+                loserP.textContent = ('Loser is ' + loser + " :'(");
+                results.appendChild(loserP);
+                console.log('winner' , currentTurn.getSymbol())
+                document.getElementById('winning-container').style.display = '';
+                
+            } 
+        }
+
+        if(winnerDeclared !== true){
+            checkDraw();
+        }
+
+    }
+
+    const checkDraw = () => {
+        if ((gameBoard.board[0] == 'X' || gameBoard.board[0] == 'O') && (gameBoard.board[1] == 'X' || gameBoard.board[1] == 'O') && 
+            (gameBoard.board[2] == 'X' || gameBoard.board[2] == 'O') && (gameBoard.board[3] == 'X' || gameBoard.board[3] == 'O') && 
+            (gameBoard.board[4] == 'X' || gameBoard.board[4] == 'O') && (gameBoard.board[5] == 'X' || gameBoard.board[5] == 'O') && 
+            (gameBoard.board[6] == 'X' || gameBoard.board[6] == 'O') && (gameBoard.board[7] == 'X' || gameBoard.board[7] == 'O') && 
+            (gameBoard.board[8] == 'X' || gameBoard.board[8] == 'O')) {
+ 
+                const drawH1 = document.createElement('h1');
+                drawH1.textContent = "It's a Draw!"
+                results.appendChild(drawH1);
+                document.getElementById('winning-container').style.display = '';
+ 
+         }
     }
     
-    const WinnerDeclared = x => {
-        let declareDraw;
-        if(x === true) {
-            let winner = currentTurn.getName();
-            let loser = previousTurn.getName();  
 
-            const winnerH2 = document.createElement('h2');
-            winnerH2.textContent = ('Winner is ' + winner + ' !');
-            results.appendChild(winnerH2);
-
-            const loserP = document.createElement('p');
-            loserP.textContent = ('Loser is ' + loser + " :'(");
-            results.appendChild(loserP);
-            console.log('winner' , currentTurn.getSymbol())
-            document.getElementById('winning-container').style.display = '';
-        } else {
-            declareDraw = false
-            DrawDeclared(declareDraw);
-        }
-    }
-
-    const DrawDeclared = z => {
-
-        if(z === false) {
-            const drawH1 = document.createElement('h1');
-            drawH1.textContent = 'Draw'
-            results.appendChild(drawH1);
-            document.getElementById('winning-container').style.display = '';
-        }
-
-    }
-
-    return {getName, getSymbol, changeTurns, checkWinner, WinnerDeclared, DrawDeclared}
+    return {getName, getSymbol, changeTurns, checkWinner, checkDraw}
 };
 
 const player1 = player('Player 1', 'X');
